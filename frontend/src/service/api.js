@@ -1,0 +1,93 @@
+import axios from 'axios'
+
+import { Api_notifications, service_url, frontEndURL } from '../constants/config'
+
+const API_URL = frontEndURL; 
+
+const axiosInstance = axios.create({
+    baseURL:API_URL,
+    timer:10000,
+    headers:{
+        'content-type': 'application/json'
+    }
+})
+
+//2 functions... for success and for failure.
+axiosInstance.interceptors.response.use(
+    (response)=>{
+        return processResponse(response);
+    },
+    (error)=>{
+        return Promise.reject(processError(error));
+    }
+)
+// If success -> returns { isSuccess: true, data: object }
+// If fail -> returns { isFailure: true, status: string, msg: string, code: int }
+const processResponse = (response)=>{
+    if (response?.status === 200) {
+        return { isSuccess: true, data: response.data }
+    } else {
+        return {
+            isFailure: true,
+            status: response?.status,
+            msg: response.data.msg || 'An error occurred',
+            code: response.status
+        }
+    }
+}
+const processError = (error)=>{
+    if(error.response){
+        // if(error.respose.status==='409'){
+        //     return({
+        //         isError:true,
+        //         msg:'Username already exists please select different username',
+        //         code:error.response.status
+        //     })
+        // }
+        return({
+            isError:true,
+            msg: Api_notifications.responseFailure,
+            code:error.response.status
+        })
+    }else if(error.request){
+        return ({
+            isError:true,
+            msg: Api_notifications.requestFailure,
+            code:''
+        })
+    }else{
+        return ({
+            isError:true,
+            mag:Api_notifications.networkError,
+            code:''
+        })
+    }
+}
+
+const API = {};
+
+//axios instance needs an object
+
+for(const [key,value] of Object.entries(service_url)){
+    API[key] = (body,showUploadProgress,showDownloadProgress)=>
+        axiosInstance({
+            method:value.method,
+            url:value.url,
+            data:body,
+            responseType: value.responseType,
+            onUploadProgress: (progresEvent)=>{
+                if(showUploadProgress){
+                    let percentComplete = Math.round((ProgressEvent.loaded*100)/progresEvent.total);
+                    showUploadProgress(percentComplete);
+                }
+            },
+            onDownloadProgress:(progresEvent)=>{
+                if(showDownloadProgress){
+                    let percentComplete = Math.round((ProgressEvent.loaded*100)/progresEvent.total);
+                    showDownloadProgress(percentComplete);
+                }
+            }
+        })
+}
+
+export default API;
