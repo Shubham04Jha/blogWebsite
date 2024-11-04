@@ -6,7 +6,7 @@ const API_URL = frontEndURL;
 
 const axiosInstance = axios.create({
     baseURL:API_URL,
-    timer:10000,
+    timeout:10000,
     headers:{
         'content-type': 'application/json'
     }
@@ -26,7 +26,7 @@ axiosInstance.interceptors.response.use(
 const processResponse = (response)=>{
     if (response?.status === 200) {
         return { isSuccess: true, data: response.data }
-    } else {
+    }else {
         return {
             isFailure: true,
             status: response?.status,
@@ -36,32 +36,16 @@ const processResponse = (response)=>{
     }
 }
 const processError = (error)=>{
+    const obj = {isError:true,msg:'',code:''};
     if(error.response){
-        // if(error.respose.status==='409'){
-        //     return({
-        //         isError:true,
-        //         msg:'Username already exists please select different username',
-        //         code:error.response.status
-        //     })
-        // }
-        return({
-            isError:true,
-            msg: Api_notifications.responseFailure,
-            code:error.response.status
-        })
+        obj.code = error.response.status;
+        obj.msg = error.response.data.msg;
     }else if(error.request){
-        return ({
-            isError:true,
-            msg: Api_notifications.requestFailure,
-            code:''
-        })
+        obj.msg = Api_notifications.requestFailure;
     }else{
-        return ({
-            isError:true,
-            mag:Api_notifications.networkError,
-            code:''
-        })
+        obj.msg= Api_notifications.networkError;
     }
+    return obj;
 }
 
 const API = {};

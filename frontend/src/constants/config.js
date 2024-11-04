@@ -25,5 +25,6 @@ export const Api_notifications = {
 export const frontEndURL = `http://localhost:5000`;
 
 export const service_url = {
-    userSignup:{url:'/signup',method:'POST'}
+    userSignup:{url:'/signup',method:'POST'},
+    userLogin:{url:'/login',method:'POST'}
 }

@@ -26,8 +26,11 @@ const Login = ()=>{
   const [userInfo,setUserInfo] = useState(signUpInitialValues);
 
   const [error,setError] = useState('');
+
+
   const toggle = ()=>{
     userType(!oldUser);
+    setError('');
   }
   const onInputChange = (e)=>{
     const {name,value} = e.target;
@@ -37,26 +40,38 @@ const Login = ()=>{
 
 
   const onSignup = async () => {
-    console.log('Signup payload:', userInfo);
     try {
         let response = await API.userSignup(userInfo);
-        console.log('Response from API:', response); // Log the entire response
-
+        console.log('Response from API:', response);
         if (response.isSuccess) {
-            toggle(); // Handle successful signup
-        } else if (response.code === 409) {
-            alert(response.msg); // This should be triggered for existing user
-        } else {
-            alert('Signup failed: ' + response.msg); // Handle other failures
+            toggle();
         }
-    } catch (error) {
-        console.error('API error:', error);
-        const errorMessage = error.msg?.message || 'An unexpected error occurred';
-        alert(errorMessage); // General error handling
-    }
+      }catch (error) {
+        console.log(error);
+        if (error.code === 409) {
+          console.log('user exists!');
+          alert(error.msg);
+        } else {
+            alert('Signup failed: ' + error.msg);
+        }
+        setError('error occurred while signing you up!'); 
+      }
   };
 
-
+  const onLogin = async ()=>{
+    const userObj = {username:userInfo.username,password:userInfo.password}
+    try{
+      let response = await API.userLogin(userObj);
+      if(response.isSuccess){
+        console.log('login successful');
+        setError('');
+      }
+    }catch(error){
+      console.log(error);
+      console.log('login unseccessful');
+      setError('Something went wrong while signing you up! check the password and username or else its our fault.')
+    }
+  }
 
     return(
         <OuterBox>
@@ -64,9 +79,10 @@ const Login = ()=>{
             <Wrapper>
               <TextField variant='standard' name='username' label='Enter username' onChange={onInputChange}></TextField>
               <TextField variant='standard' name='password' label='Enter password' onChange={onInputChange}></TextField>
-              <Button variant="contained">Signin</Button>
+              <Button variant="contained" onClick={onLogin}>Sign in</Button>
               <Typography style={{textAlign:'center'}}>Or</Typography>
-              <Button variant="outlined" onClick={toggle}>Signup</Button>
+              <Button variant="outlined" onClick={toggle}>Sign up</Button>
+              {error&&<Typography>{error}</Typography>}
             </Wrapper>
             :
             <Wrapper>
