@@ -49,12 +49,12 @@ const Login = ()=>{
       }catch (error) {
         console.log(error);
         if (error.code === 409) {
-          console.log('user exists!');
-          alert(error.msg);
+          console.log('username already exists! Please select a different one.');
+          // alert(error.msg);
         } else {
             alert('Signup failed: ' + error.msg);
         }
-        setError('error occurred while signing you up!'); 
+        setError(error.msg); 
       }
   };
 
@@ -64,12 +64,15 @@ const Login = ()=>{
       let response = await API.userLogin(userObj);
       if(response.isSuccess){
         console.log('login successful');
+        console.log(response);
         setError('');
+        sessionStorage.setItem('accessToken',`Bearer ${response.data.accessToken}`);
+        sessionStorage.setItem('refreshToken',`Bearer ${response.data.refreshToken}`);
       }
     }catch(error){
       console.log(error);
       console.log('login unseccessful');
-      setError('Something went wrong while signing you up! check the password and username or else its our fault.')
+      setError(`${error.msg}`);
     }
   }
 
@@ -77,8 +80,8 @@ const Login = ()=>{
         <OuterBox>
           { oldUser?
             <Wrapper>
-              <TextField variant='standard' name='username' label='Enter username' onChange={onInputChange}></TextField>
-              <TextField variant='standard' name='password' label='Enter password' onChange={onInputChange}></TextField>
+              <TextField variant='standard' name='username' label='Enter username' onChange={onInputChange} value={userInfo.username}></TextField>
+              <TextField variant='standard' name='password' label='Enter password' onChange={onInputChange} value={userInfo.password}></TextField>
               <Button variant="contained" onClick={onLogin}>Sign in</Button>
               <Typography style={{textAlign:'center'}}>Or</Typography>
               <Button variant="outlined" onClick={toggle}>Sign up</Button>
@@ -86,9 +89,9 @@ const Login = ()=>{
             </Wrapper>
             :
             <Wrapper>
-              <TextField variant='standard' name='name' label='Enter name' onChange={onInputChange}></TextField>
-              <TextField variant='standard' name = 'username' label='Enter username' onChange={onInputChange}></TextField>
-              <TextField variant='standard'name='password' label='Enter password' onChange={onInputChange}></TextField>
+              <TextField variant='standard' name='name' label='Enter name' onChange={onInputChange} value={userInfo.name}></TextField>
+              <TextField variant='standard' name = 'username' label='Enter username' onChange={onInputChange} value={userInfo.username}></TextField>
+              <TextField variant='standard'name='password' label='Enter password' onChange={onInputChange} value={userInfo.password}></TextField>
               <Button variant="contained" onClick={onSignup} >Signup</Button>
               <Typography style={{textAlign:'center'}}>Or</Typography>
               <Button variant="outlined" onClick={toggle}>Already an User</Button>

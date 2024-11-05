@@ -1,7 +1,12 @@
 import User from '../Model/user.js';
 
-import bcrypt from 'bcrypt';
+import Token from '../Model/token.js';
 
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default async function signupUser(req, res) {
     try {
@@ -20,7 +25,7 @@ export default async function signupUser(req, res) {
         const existingUser = await User.findOne({ username: encryptedUser.username });
         
         if (existingUser) {
-            console.log(`User already exists: ${encryptedUser.username}`);
+            console.log(`Username already taken: ${encryptedUser.username}`);
             return res.status(409).json({ msg: 'Username already exists, please choose another' });
         }
 
@@ -36,5 +41,33 @@ export default async function signupUser(req, res) {
         }
 
         return res.status(500).json({ msg: `Error while signing up: ${err.message}` });
+    }
+}
+
+export async function login(req,res){
+    const user = req.body;
+    if(!user.username||!user.password){
+        return (res.status(400).json({msg:'all fields are required!'}));
+    }
+    const existingUser = await User.findOne({username:user.username});
+    if(!existingUser){
+        return (res.status(404).json({msg:'username doesnot exists!'}));
+    }
+    try{
+        const isSame = await bcrypt.compare(user.password,existingUser.password);
+        if(!isSame){
+            return (res.status(401).json({msg:'wrong password!'}));
+        }else{
+            const accessToken = jwt.sign(existingUser.toJSON(),process.env.Secret_Access_Key,{expiresIn:'15m'});
+            const refreshToken = jwt.sign(existingUser.toJSON(),process.env.Secret_Refresh_Key);
+
+            //storing in db:
+            // const newToken = Token.save(refreshToken); not work cuz we modelled out schema to take a key token and then a string.
+            const newToken = new Token({token:refreshToken});// and new keyword is used to create an instance.
+            await newToken.save();
+            return (res.status(200).json({msg:`welcome ${existingUser.name}`,accessToken:accessToken,refreshToken:refreshToken,userName:existingUser.username,name:existingUser.name}));
+        }
+    }catch(error){
+        return res.status(500).json({msg:'error while login in'});
     }
 }
