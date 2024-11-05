@@ -1,5 +1,7 @@
 import {Box,TextField,Button,styled,Typography} from '@mui/material';
-import { useState } from 'react';
+import { useState,useContext } from 'react';
+
+import { DataContext } from '../../context/DataProvider.jsx';
 
 import API from '../../service/api.js'
 const OuterBox = styled(Box)`
@@ -27,6 +29,7 @@ const Login = ()=>{
 
   const [error,setError] = useState('');
 
+  const {setAccount,account} = useContext(DataContext);
 
   const toggle = ()=>{
     userType(!oldUser);
@@ -58,8 +61,10 @@ const Login = ()=>{
       }
   };
 
+  
+
   const onLogin = async ()=>{
-    const userObj = {username:userInfo.username,password:userInfo.password}
+    const userObj = {username:userInfo.username,password:userInfo.password};
     try{
       let response = await API.userLogin(userObj);
       if(response.isSuccess){
@@ -68,6 +73,8 @@ const Login = ()=>{
         setError('');
         sessionStorage.setItem('accessToken',`Bearer ${response.data.accessToken}`);
         sessionStorage.setItem('refreshToken',`Bearer ${response.data.refreshToken}`);
+        setAccount({username:response.data.userName,name:response.data.name});
+        console.log(account);
       }
     }catch(error){
       console.log(error);
