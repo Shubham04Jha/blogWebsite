@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+
 import DataProvider from './context/DataProvider.jsx';
 
 //components
@@ -9,7 +11,11 @@ function App() {
   return (
     <div >
         <DataProvider>
-          <Login/>
+            <BrowserRouter>
+              <Routes>
+                  <Route path ='/login' element ={<Login/>}/>
+              </Routes>
+            </BrowserRouter>
         </DataProvider>
     </div>
   );
