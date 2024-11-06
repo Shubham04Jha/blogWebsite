@@ -1,19 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
-
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Outlet,Navigate} from 'react-router-dom';
 
 import DataProvider from './context/DataProvider.jsx';
 
+import { useState } from 'react';
+
+
 //components
 import Login from './components/account/Login.js';
+import {Home} from './components/home/Home.js';
+
+const PrivateRoute = ({ userAuthentication, ...props }) => {
+    return userAuthentication ? <Outlet /> : <Navigate replace to="/login" />;
+};
+
+
 function App() {
+  const [userAuthentication,setUserAuthentication] = useState(false);
   return (
     <div >
         <DataProvider>
             <BrowserRouter>
               <Routes>
-                  <Route path ='/login' element ={<Login/>}/>
+                  <Route path ='/login' element ={<Login setUserAuthentication={setUserAuthentication}/>}/>
+                  <Route path = '/' element = {<PrivateRoute userAuthentication = {userAuthentication} />}>
+                    <Route path = '/' element = {<Home/>}/>
+                  </Route>
               </Routes>
             </BrowserRouter>
         </DataProvider>

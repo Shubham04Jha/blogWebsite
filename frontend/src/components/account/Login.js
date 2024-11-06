@@ -4,6 +4,9 @@ import { useState,useContext } from 'react';
 import { DataContext } from '../../context/DataProvider.jsx';
 
 import API from '../../service/api.js'
+
+import { useNavigate } from 'react-router-dom';
+
 const OuterBox = styled(Box)`
   display: flex;
   width: 500px;
@@ -21,7 +24,7 @@ const Wrapper = styled(Box)`
 const signUpInitialValues = {
   name:'', username:'', password:''
 }
-const Login = ()=>{
+const Login = ({setUserAuthentication})=>{
   
   const [oldUser,userType] = useState(true);
 
@@ -30,6 +33,8 @@ const Login = ()=>{
   const [error,setError] = useState('');
 
   const {setAccount,account} = useContext(DataContext);
+
+  const navigate = useNavigate(); // init
 
   const toggle = ()=>{
     userType(!oldUser);
@@ -61,6 +66,7 @@ const Login = ()=>{
       }
   };
 
+
   
 
   const onLogin = async ()=>{
@@ -75,11 +81,13 @@ const Login = ()=>{
         sessionStorage.setItem('refreshToken',`Bearer ${response.data.refreshToken}`);
         setAccount({username:response.data.userName,name:response.data.name});
         console.log(account);
+        setUserAuthentication(true);
+        navigate('/');
       }
     }catch(error){
       console.log(error);
       console.log('login unseccessful');
-      setError(`${error.msg}`);
+      setError(error.msg?error.msg:`${'unexpected error occurred!'}`);
     }
   }
 

@@ -36,14 +36,17 @@ const processResponse = (response)=>{
     }
 }
 const processError = (error)=>{
-    const obj = {isError:true,msg:'',code:''};
+    const obj = {isError:true,title:'',msg:'',code:''};
     if(error.response){
         obj.code = error.response.status;
         obj.msg = error.response.data.msg;
+        obj.title = 'Error'
     }else if(error.request){
-        obj.msg = Api_notifications.requestFailure;
+        obj.msg = Api_notifications.requestFailure.message;
+        obj.title = Api_notifications.requestFailure.title;
     }else{
-        obj.msg= Api_notifications.networkError;
+        obj.msg= Api_notifications.networkError.message;
+        obj.title= Api_notifications.networkError.title;
     }
     return obj;
 }
