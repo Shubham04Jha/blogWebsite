@@ -7,10 +7,15 @@ import { useState } from 'react';
 
 //components
 import Login from './components/account/Login.js';
-import {Home} from './components/home/Home.js';
+import Home from './components/home/Home.js';
+import Header from './components/header/Header.js';
 
-const PrivateRoute = ({ userAuthentication, ...props }) => {
-    return userAuthentication ? <Outlet /> : <Navigate replace to="/login" />;
+const PrivateRoute = ({ userAuthentication,...props }) => {
+    return userAuthentication ?
+    <>
+      <Header userAuthentication={userAuthentication}/>
+      <Outlet />
+    </>  : <Navigate replace to="/login" />;
 };
 
 
@@ -21,7 +26,7 @@ function App() {
         <DataProvider>
             <BrowserRouter>
               <Routes>
-                  <Route path ='/login' element ={<Login setUserAuthentication={setUserAuthentication}/>}/>
+                  <Route path ='/login' element ={<Login setUserAuthentication={setUserAuthentication} userAuthentication={userAuthentication}/>}/>
                   <Route path = '/' element = {<PrivateRoute userAuthentication = {userAuthentication} />}>
                     <Route path = '/' element = {<Home/>}/>
                   </Route>
