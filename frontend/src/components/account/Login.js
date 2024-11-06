@@ -24,7 +24,7 @@ const Wrapper = styled(Box)`
 const signUpInitialValues = {
   name:'', username:'', password:''
 }
-const Login = ({setUserAuthentication},{UserAuthentication})=>{
+const Login = ({setUserAuthentication, UserAuthentication})=>{
   console.log("boolean: "+UserAuthentication);
   const [oldUser,userType] = useState(true);
 
@@ -65,10 +65,6 @@ const Login = ({setUserAuthentication},{UserAuthentication})=>{
         setError(error.msg); 
       }
   };
-
-
-  
-
   const onLogin = async ()=>{
     const userObj = {username:userInfo.username,password:userInfo.password};
     try{
