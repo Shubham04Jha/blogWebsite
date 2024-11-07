@@ -2,6 +2,8 @@ import { Button, Table, TableHead, TableRow, TableCell, TableBody, styled } from
 
 import { categories } from '../../constants/data';
 
+import {Link} from 'react-router-dom'
+
 const StyledTable = styled(Table)`
     border: 1px solid rgba(224, 224, 224, 1);
 `;
@@ -14,25 +16,35 @@ const StyledButton = styled(Button)`
     text-decoration: none;
 `;
 
+const StyledTableCell = styled(TableCell)`
+    text-align: center; /* Center horizontally */
+    display: flex;      /* Flexbox to center vertically */
+    align-items: center; /* Center vertically */
+    justify-content: center; 
+    font-size: 18px;     
+    padding: 16px;       
+`;
 const Categories = () => {    
     return (
         <>
-            <StyledButton variant="contained">Create Blog</StyledButton>            
+            <Link to="/create">
+                <StyledButton variant="contained">Create Blog</StyledButton>
+            </Link>            
             <StyledTable>
                 <TableHead>
                     <TableRow>
-                        <TableCell>
+                        <StyledTableCell>
                             All Categories
-                        </TableCell>
+                        </StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {
                         categories.map(category => (
                             <TableRow key={category.id}>
-                                <TableCell>
+                                <StyledTableCell>
                                     {category.type}
-                                </TableCell>
+                                </StyledTableCell>
                             </TableRow>
                         ))
                     }

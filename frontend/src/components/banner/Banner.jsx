@@ -3,7 +3,7 @@ import { styled, Box, Typography } from '@mui/material';
 
 const Image = styled(Box)`
     width: 100%;
-    background: url(/banner-background.jpg) center/55% repeat-x #000;
+    background: url(/banner-background.jpg)  repeat-x #000;
     height: 30vh;
     display: flex;
     flex-direction: column;

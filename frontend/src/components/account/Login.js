@@ -24,8 +24,7 @@ const Wrapper = styled(Box)`
 const signUpInitialValues = {
   name:'', username:'', password:''
 }
-const Login = ({setUserAuthentication, UserAuthentication})=>{
-  console.log("boolean: "+UserAuthentication);
+const Login = ({setUserAuthentication})=>{
   const [oldUser,userType] = useState(true);
 
   const [userInfo,setUserInfo] = useState(signUpInitialValues);
