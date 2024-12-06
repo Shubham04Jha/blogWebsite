@@ -1,10 +1,12 @@
-import { Box, styled,Typography } from '@mui/material';
+import { Box, styled } from '@mui/material';
 
 import { Grid2 } from '@mui/material';
 
 //components
 import Banner from '../banner/Banner';
 import Categories from './Categories.jsx';
+
+import Posts from './post/Posts.js';
 
 const HomeContainer = styled('div')`
   margin-left:30px;
@@ -14,8 +16,7 @@ const ImgContainer = styled(Box)`
     margin-top:64px;
 `;
 
-const PostSection = styled(Box)`
-  margin-top: 40px; 
+const PostSection = styled(Box)` 
   padding: 20px; 
 `;
 
@@ -44,10 +45,7 @@ const Home = () => {
                     </Grid2>
                     <Grid2 item size={{xs:12, md:main, lg:main}}>
                         <PostSection>
-                            <Typography variant="h4" gutterBottom>
-                                Hello from the posts!
-                            </Typography>
-                            {/* You can add more post content here */}
+                            <Posts/>
                         </PostSection>
                     </Grid2>
                 </Grid2>

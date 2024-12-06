@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { Api_notifications, service_url, backEndUrl } from '../constants/config'
-import { getAccessToken } from '../utils/common-utils';
+import { getAccessToken ,getType } from '../utils/common-utils';
 
 const API_URL = backEndUrl; 
 
@@ -12,6 +12,20 @@ const axiosInstance = axios.create({
         "Accept": "application/json" 
     }
 })
+
+axiosInstance.interceptors.request.use(
+    function(config) {
+        if (config.TYPE.params) {
+            config.params = config.TYPE.params
+        } else if (config.TYPE.query) {
+            config.url = config.url + '/' + config.TYPE.query;
+        }
+        return config;
+    },
+    function(error) {
+        return Promise.reject(error);
+    }
+);
 
 //2 functions... for success and for failure.
 axiosInstance.interceptors.response.use(
@@ -25,7 +39,7 @@ axiosInstance.interceptors.response.use(
 // If success -> returns { isSuccess: true, data: object }
 // If fail -> returns { isFailure: true, status: string, msg: string, code: int }
 const processResponse = (response)=>{
-    if (response?.status === 200) {
+    if (response?.status >= 200 && response?.status < 300) {
         return { isSuccess: true, data: response.data }
     }else {
         return {
@@ -66,15 +80,16 @@ for(const [key,value] of Object.entries(service_url)){
             headers:{
                 authorization:getAccessToken(),
             },
-            onUploadProgress: (progresEvent)=>{
+            TYPE:getType(value,body),
+            onUploadProgress: (progressEvent)=>{
                 if(showUploadProgress){
-                    let percentComplete = Math.round((ProgressEvent.loaded*100)/progresEvent.total);
+                    let percentComplete = Math.round((progressEvent.loaded*100)/progressEvent.total);
                     showUploadProgress(percentComplete);
                 }
             },
-            onDownloadProgress:(progresEvent)=>{
+            onDownloadProgress:(progressEvent)=>{
                 if(showDownloadProgress){
-                    let percentComplete = Math.round((ProgressEvent.loaded*100)/progresEvent.total);
+                    let percentComplete = Math.round((progressEvent.loaded*100)/progressEvent.total);
                     showDownloadProgress(percentComplete);
                 }
             }

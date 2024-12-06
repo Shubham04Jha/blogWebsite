@@ -4,12 +4,13 @@ import DataProvider from './context/DataProvider.jsx';
 
 import { useState } from 'react';
 
-
 //components
 import Login from './components/account/Login.js';
 import Home from './components/home/Home.js';
 import Header from './components/header/Header.js';
 import CreatePost from './components/create/CreatePost.jsx';
+import DetailView from './components/details/DetailView.jsx';
+
 
 const PrivateRoute = ({ userAuthentication,...props }) => {
     return userAuthentication ?
@@ -35,6 +36,11 @@ function App() {
                   <Route path = '/create' element = {<PrivateRoute userAuthentication = {userAuthentication} />}>
                     <Route path = '/create' element = {<CreatePost/>}/>
                   </Route>
+                  
+                  <Route path = '/details/:id' element = {<PrivateRoute userAuthentication = {userAuthentication} />}>
+                    <Route path = '/details/:id' element = {<DetailView/>}/>
+                  </Route>
+
               </Routes>
             </BrowserRouter>
         </DataProvider>

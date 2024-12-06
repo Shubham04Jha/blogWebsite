@@ -24,9 +24,13 @@ export const Api_notifications = {
 }
 export const backEndUrl = `http://localhost:5000`;
 
+
+// {url:'/*', method:POST/GET/PUT/DELETE, params:true/false, query:true/false }
 export const service_url = {
     userSignup:{url:'/signup',method:'POST'},
     userLogin:{url:'/login',method:'POST'},
     fileUpload:{url:'/file/upload', method:'POST'},
-    createPost:{url:'/createPost', method:'POST'}
+    createPost:{url:'/createPost', method:'POST'},
+    getAllPosts: {url:'/posts',method:'GET', params:true},
+    getPostById: {url:'/post' ,method:'GET',query:true}
 }
