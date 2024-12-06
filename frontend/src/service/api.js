@@ -1,14 +1,15 @@
 import axios from 'axios'
 
-import { Api_notifications, service_url, frontEndURL } from '../constants/config'
+import { Api_notifications, service_url, backEndUrl } from '../constants/config'
+import { getAccessToken } from '../utils/common-utils';
 
-const API_URL = frontEndURL; 
+const API_URL = backEndUrl; 
 
 const axiosInstance = axios.create({
     baseURL:API_URL,
     timeout:10000,
     headers:{
-        'content-type': 'application/json'
+        "Accept": "application/json" 
     }
 })
 
@@ -53,7 +54,7 @@ const processError = (error)=>{
 
 const API = {};
 
-//axios instance needs an object
+//axios instance, a function, needs an object
 
 for(const [key,value] of Object.entries(service_url)){
     API[key] = (body,showUploadProgress,showDownloadProgress)=>
@@ -62,6 +63,9 @@ for(const [key,value] of Object.entries(service_url)){
             url:value.url,
             data:body,
             responseType: value.responseType,
+            headers:{
+                authorization:getAccessToken(),
+            },
             onUploadProgress: (progresEvent)=>{
                 if(showUploadProgress){
                     let percentComplete = Math.round((ProgressEvent.loaded*100)/progresEvent.total);

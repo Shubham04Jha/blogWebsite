@@ -22,9 +22,11 @@ export const Api_notifications = {
         message: "Unable to connect to the server. Please check internet connectivity and try again."
     }
 }
-export const frontEndURL = `http://localhost:5000`;
+export const backEndUrl = `http://localhost:5000`;
 
 export const service_url = {
     userSignup:{url:'/signup',method:'POST'},
-    userLogin:{url:'/login',method:'POST'}
+    userLogin:{url:'/login',method:'POST'},
+    fileUpload:{url:'/file/upload', method:'POST'},
+    createPost:{url:'/createPost', method:'POST'}
 }
