@@ -21,8 +21,7 @@ const StyledTableCell = styled(TableCell)`
     display: flex;      /* Flexbox to center vertically */
     align-items: center; /* Center vertically */
     justify-content: center; 
-    font-size: 18px;     
-    padding: 16px;       
+    font-size: 18px;            
 `;
 const StyledLink = styled(Link)`
     text-decoration: none;

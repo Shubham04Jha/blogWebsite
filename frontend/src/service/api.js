@@ -75,7 +75,7 @@ for(const [key,value] of Object.entries(service_url)){
         axiosInstance({
             method:value.method,
             url:value.url,
-            data:body,
+            data: value.method === 'DELETE' ? {} : body,
             responseType: value.responseType,
             headers:{
                 authorization:getAccessToken(),

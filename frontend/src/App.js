@@ -10,6 +10,7 @@ import Home from './components/home/Home.js';
 import Header from './components/header/Header.js';
 import CreatePost from './components/create/CreatePost.jsx';
 import DetailView from './components/details/DetailView.jsx';
+import Update from './components/create/Update.jsx'
 
 
 const PrivateRoute = ({ userAuthentication,...props }) => {
@@ -35,6 +36,10 @@ function App() {
 
                   <Route path = '/create' element = {<PrivateRoute userAuthentication = {userAuthentication} />}>
                     <Route path = '/create' element = {<CreatePost/>}/>
+                  </Route>
+
+                  <Route path = '/update/:id' element = {<PrivateRoute userAuthentication = {userAuthentication} />}>
+                    <Route path = '/update/:id' element = {<Update/>}/>
                   </Route>
                   
                   <Route path = '/details/:id' element = {<PrivateRoute userAuthentication = {userAuthentication} />}>

@@ -1,7 +1,5 @@
 import { Box, styled } from '@mui/material';
 
-import { Grid2 } from '@mui/material';
-
 //components
 import Banner from '../banner/Banner';
 import Categories from './Categories.jsx';
@@ -29,26 +27,25 @@ const CategoriesContainer = styled(Box)`
 `;
 
 const Home = () => {
-    const side = 1.6;
-    const main = 12-side;
     return (
         <>
             <ImgContainer>
                 <Banner />
             </ImgContainer>
             <HomeContainer>
-                <Grid2 container spacing={1.5}>
-                    <Grid2 item size={{xs:12,lg:side,md:side}}>
+                <div className='m-1 grid grid-cols-1 gap-3 sm:grid-cols-12 '>
+                    <div className='sm:col-span-2 '>
                         <CategoriesContainer>
                             <Categories />
                         </CategoriesContainer>
-                    </Grid2>
-                    <Grid2 item size={{xs:12, md:main, lg:main}}>
-                        <PostSection>
-                            <Posts/>
-                        </PostSection>
-                    </Grid2>
-                </Grid2>
+                        {/* <div className='min-h-[100px] rounded-lg shadow bg-teal-500'></div> */}
+                    </div>
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-12 sm:col-span-10 ">
+                        <Posts/>
+                        {/* <div className='min-h-[100px] rounded-lg shadow bg-orange-500'></div>
+                        <div className='min-h-[100px] rounded-lg shadow bg-purple-500'></div> */}
+                    </div>
+                </div>
             </HomeContainer>
         </>
     );

@@ -26,6 +26,10 @@ const postSchema = mongoose.Schema({
     createDate:{
         type: Date ,
         required: true
+    },
+    editDate:{
+        type:Date,
+        required:false
     }
 });
 

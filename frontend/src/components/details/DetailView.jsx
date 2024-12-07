@@ -10,7 +10,7 @@ import { DataContext } from '../../context/DataProvider';
 
 
 const Container = styled(Box)(({ theme }) => ({
-    margin: '50px 100px',
+    margin: '64px 100px',
     [theme.breakpoints.down('md')]: {
         margin: 0
     },
@@ -18,7 +18,7 @@ const Container = styled(Box)(({ theme }) => ({
 
 const Image = styled('img')({
     width: '100%',
-    height: '50vh',
+    height: '40vh',
     // objectFit: 'cover'
 });
 
@@ -36,6 +36,13 @@ const Author = styled(Box)(({ theme }) => ({
     [theme.breakpoints.down('sm')]: {
         display: 'block'
     },
+}));
+
+const EditDate = styled(Typography)(({ theme }) => ({
+    fontSize: '14px',
+    color: '#878787',
+    marginTop: '10px',
+    fontStyle: 'italic',
 }));
 
 const DetailView = () => {
@@ -64,9 +71,23 @@ const DetailView = () => {
         <Container>
             <Image src={post.blogBanner=='defaultImage'?'/banner-background.jpg':post.blogBanner} alt="post-Banner" />
             <Box style={{ float: 'right' }}>
+            <label style={{cursor:'pointer'}} onClick={() => navigate(-1)}>
+                        <i className="material-icons" style={{
+                            fontSize: '30px', 
+                            color: 'black', 
+                            marginRight: '15px', 
+                            padding: '10px', 
+                            backgroundColor: '#f9f9f9', 
+                            border: '2px solid #333', 
+                            borderRadius: '8px', 
+                            backgroundColor: '#f9f9f9'
+                        }} alt="cancel">arrow_back</i>
+                    </label>
                 {   
                     account.username === post.userName && 
                     <>  
+
+                        <Link to={`/update/${post._id}`}>
                         <i className="material-icons" style={{
                         fontSize: '30px', 
                         color: 'blue', 
@@ -76,15 +97,26 @@ const DetailView = () => {
                         borderRadius: '8px', 
                         backgroundColor: '#f9f9f9'
                         }}>edit</i>
+                        </Link>
 
-                        <i className="material-icons" style={{
-                        fontSize: '30px', 
-                        color: 'red', 
-                        padding: '10px', 
-                        border: '2px solid #333', 
-                        borderRadius: '8px', 
-                        backgroundColor: '#f9f9f9'
-                        }}>delete</i>
+                        <Link onClick={async()=>{
+                            let response=await API.deletePost(post._id);
+                            if(response.isSuccess){
+                                navigate(-1);
+                            }else{
+                                alert('could not delete...');
+                            }
+                        }}>
+                            <i className="material-icons" style={{
+                            fontSize: '30px', 
+                            color: 'red', 
+                            padding: '10px', 
+                            border: '2px solid #333', 
+                            borderRadius: '8px', 
+                            backgroundColor: '#f9f9f9'
+                            }}>delete</i>
+                        </Link>
+
                     </>
                 }
             </Box>
@@ -94,7 +126,11 @@ const DetailView = () => {
                 <Typography>Author: <span style={{fontWeight: 600}}>{post.userName}</span></Typography>
                 <Typography style={{marginLeft: 'auto'}}>{new Date(post.createDate).toDateString()}</Typography>
             </Author>
-
+            {post.editDate && (
+                <EditDate>
+                    Last edited on: {new Date(post.editDate).toDateString()}
+                </EditDate>
+            )}
             <Typography>{post.description}</Typography>
         </Container>
     )

@@ -27,11 +27,11 @@ const Posts = ()=>{
         <>
             {
                 posts?.length ? posts.map(post => (
-                    <Grid2 item size={{xs:12,lg:3,md:4}}>
+                    <div className="col-span-3">
                         <Link style={{textDecoration: 'none', color: 'inherit'}} to={`details/${post._id}`}> 
                             <Post post={post} />
                         </Link>
-                    </Grid2>
+                    </div>
                 )) : <Box style={{color: '878787', margin: '30px 80px', fontSize: 18}}>
                         No data is available for selected category
                     </Box>
