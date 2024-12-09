@@ -63,7 +63,7 @@ const processError = (error)=>{
         obj.msg= Api_notifications.networkError.message;
         obj.title= Api_notifications.networkError.title;
     }
-    return obj;
+    return error;
 }
 
 const API = {};

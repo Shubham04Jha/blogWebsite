@@ -7,7 +7,7 @@ import API  from '../../service/api';
 
 import { DataContext } from '../../context/DataProvider';
 
-
+import Comments from './comments/Comments';
 
 const Container = styled(Box)(({ theme }) => ({
     margin: '64px 100px',
@@ -132,6 +132,7 @@ const DetailView = () => {
                 </EditDate>
             )}
             <Typography>{post.description}</Typography>
+            <Comments post={post} />
         </Container>
     )
 }

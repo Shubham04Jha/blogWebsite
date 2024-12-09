@@ -45,7 +45,7 @@ const Post = ({ post }) => {
     } 
 
     return (
-        <Container>
+        <Container >
             <Image src={url} alt="post" />
             <Text>{post.category}</Text>
             <Heading>{addEllipsis(post.title, 20)}</Heading>

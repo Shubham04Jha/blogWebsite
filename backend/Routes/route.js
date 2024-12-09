@@ -6,6 +6,8 @@ import { authenticateToken } from '../Controller/jwt-controller.js';
 
 import { uploadImage,getImage } from '../Controller/image-controller.js';
 
+import { createComment, deleteComment, getComments } from '../Controller/comment-controller.js';
+
 const router = express.Router();
 
 router.post('/signup',signupUser);
@@ -25,7 +27,13 @@ router.put('/update/:id', authenticateToken, updatePost);
 
 router.delete('/delete/:id', authenticateToken, deletePost);
 
-
+//comments.....
+// router.post('/comments/add',authenticateToken,createComment);
+// router.get('/comments/get/:id',authenticateToken,getComments);
+// router.delete('/comments/delete/:id',authenticateToken,deleteComment);
+router.post('/comments/add',authenticateToken,createComment);
+router.get('/comments/get/:id',authenticateToken,getComments);
+router.delete('/comments/delete/:id',authenticateToken,deleteComment);
 
 
 

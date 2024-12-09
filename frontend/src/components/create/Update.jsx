@@ -105,8 +105,8 @@ const Update = () => {
         if(response.isSuccess){
             navigate(-1)
         }else{
-            console.log("response:");
-            console.log(response);
+            // console.log("response:");
+            // console.log(response);
         }
         // console.log(postDetails)
     }

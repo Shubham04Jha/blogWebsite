@@ -16,7 +16,7 @@ const Posts = ()=>{
     useEffect( ()=>{// category response is expected here...
         const fetchData = async()=>{
             let response = await API.getAllPosts({ category : category || 'All' });
-            console.log(response);
+            // console.log(response);
             if(response.isSuccess){
                 setPosts(response.data);
             }
@@ -27,12 +27,12 @@ const Posts = ()=>{
         <>
             {
                 posts?.length ? posts.map(post => (
-                    <div className="col-span-3">
+                    <div key={post._id} className="col-span-3">
                         <Link style={{textDecoration: 'none', color: 'inherit'}} to={`details/${post._id}`}> 
                             <Post post={post} />
                         </Link>
                     </div>
-                )) : <Box style={{color: '878787', margin: '30px 80px', fontSize: 18}}>
+                )) : <Box className="col-span-10" style={{color: '878787', margin: '30px 80px', fontSize: 18}}>
                         No data is available for selected category
                     </Box>
             }

@@ -42,21 +42,21 @@ const Login = ({setUserAuthentication})=>{
   const onInputChange = (e)=>{
     const {name,value} = e.target;
     setUserInfo({ ...userInfo,[name]:value});
-    console.log(userInfo);
+    // console.log(userInfo);
   }
 
 
   const onSignup = async () => {
     try {
         let response = await API.userSignup(userInfo);
-        console.log('Response from API:', response);
+        // console.log('Response from API:', response);
         if (response.isSuccess) {
             toggle();
         }
       }catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error.code === 409) {
-          console.log('username already exists! Please select a different one.');
+          // console.log('username already exists! Please select a different one.');
           // alert(error.msg);
         } else {
             alert('Signup failed: ' + error.msg);
@@ -69,19 +69,19 @@ const Login = ({setUserAuthentication})=>{
     try{
       let response = await API.userLogin(userObj);
       if(response.isSuccess){
-        console.log('login successful');
-        console.log(response);
+        // console.log('login successful');
+        // console.log(response);
         setError('');
         sessionStorage.setItem('accessToken',`Bearer ${response.data.accessToken}`);
         sessionStorage.setItem('refreshToken',`Bearer ${response.data.refreshToken}`);
         setAccount({username:response.data.userName,name:response.data.name});
-        console.log(account);
+        // console.log(account);
         setUserAuthentication(true);
         navigate('/');
       }
     }catch(error){
-      console.log(error);
-      console.log('login unseccessful');
+      // console.log(error);
+      // console.log('login unseccessful');
       setError(error.msg?error.msg:`${'unexpected error occurred!'}`);
     }
   }

@@ -17,7 +17,7 @@ const Container = styled(Toolbar)`
 `
 
 export const Header = ({userAuthentication}) => {
-        console.log('boolean : '+userAuthentication);
+        // console.log('boolean : '+userAuthentication);
     return (
         <Component>
             <Container>
