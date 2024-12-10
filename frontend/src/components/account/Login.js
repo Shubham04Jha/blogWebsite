@@ -65,6 +65,7 @@ const Login = ({setUserAuthentication})=>{
       }
   };
   const onLogin = async ()=>{
+    sessionStorage.clear();// quick hack to get out of access token error.
     const userObj = {username:userInfo.username,password:userInfo.password};
     try{
       let response = await API.userLogin(userObj);

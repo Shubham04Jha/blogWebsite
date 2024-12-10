@@ -8,7 +8,6 @@ export const uploadImage = async (req, res) => {
     }
 
     try {
-        // Create a new Photo document
         const photo = new Photo({
             filename: req.file.originalname,
             contentType: req.file.mimetype,

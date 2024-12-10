@@ -14,7 +14,7 @@ export default async function signupUser(req, res) {
 
         // Check for required fields
         if (!user.name || !user.username || !user.password) {
-            console.log('fields cannot be empty');
+            // console.log('fields cannot be empty');
             return res.status(400).json({ msg: 'All fields are required' });
         }
 
@@ -25,7 +25,7 @@ export default async function signupUser(req, res) {
         const existingUser = await User.findOne({ username: encryptedUser.username });
         
         if (existingUser) {
-            console.log(`Username already taken: ${encryptedUser.username}`);
+            // console.log(`Username already taken: ${encryptedUser.username}`);
             return res.status(409).json({ msg: 'Username already exists, please choose another' });
         }
 
@@ -58,16 +58,26 @@ export async function login(req,res){
         if(!isSame){
             return (res.status(401).json({msg:'wrong password!'}));
         }else{
-            const accessToken = jwt.sign(existingUser.toJSON(),process.env.Secret_Access_Key,{expiresIn:'15m'});
-            const refreshToken = jwt.sign(existingUser.toJSON(),process.env.Secret_Refresh_Key);
+            const accessToken = jwt.sign(existingUser.toJSON(),process.env.Secret_Access_Key,{expiresIn:'15m'}); 
+            const refreshToken = jwt.sign(existingUser.toJSON(),process.env.Secret_Refresh_Key,{ expiresIn: '1d' });// this is what is being stored in db
+            
+            const expiresAt = new Date();
+            expiresAt.setSeconds(expiresAt.getSeconds()+1*24*60*60);// for testing setting the value to 1day.
+            // console.log(expiresAt.toDateString()); so the expiresAt is successfully set
 
-            //storing in db:
-            // const newToken = Token.save(refreshToken); not work cuz we modelled out schema to take a key token and then a string.
-            const newToken = new Token({token:refreshToken});// and new keyword is used to create an instance.
+            const newToken = new Token({token:refreshToken,expiresAt:expiresAt});
             await newToken.save();
             return (res.status(200).json({msg:`welcome ${existingUser.name}`,accessToken:accessToken,refreshToken:refreshToken,userName:existingUser.username,name:existingUser.name}));
         }
     }catch(error){
         return res.status(500).json({msg:'error while login in'});
     }
+}
+
+
+export const logoutUser = async (request, response) => {
+    // console.log(request.body);
+    const token = request.body.token;
+    await Token.deleteMany({ token: token });// nottodo delete many not executing properly. or maybe it is happening and I am not seeing it cuz the token must be changing. Oh yea it would be changing as iat is also involved in it. so good so far i say.
+    response.status(204).json({ msg: 'logout successfull' });
 }

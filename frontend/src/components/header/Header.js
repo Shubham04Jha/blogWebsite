@@ -1,6 +1,8 @@
 
 import { AppBar, Toolbar, styled, Button } from '@mui/material'; 
 import { Link } from 'react-router-dom';
+import API from '../../service/api.js';
+import {getRefreshToken} from '../../utils/common-utils.js';
 
 const Component = styled(AppBar)`
     background: #FFFFFF;
@@ -16,6 +18,12 @@ const Container = styled(Toolbar)`
     }
 `
 
+const logOut = async()=>{
+    // console.log('logout!')
+    const token = getRefreshToken();
+    await API.userLogOut({token});
+}
+
 export const Header = ({userAuthentication}) => {
         // console.log('boolean : '+userAuthentication);
     return (
@@ -24,7 +32,7 @@ export const Header = ({userAuthentication}) => {
                 <Link to='/'>HOME</Link>
                 <Link to='/about'>ABOUT</Link>
                 <Link to='/contact'>CONTACT</Link>
-                <Link to='/login'>LOGOUT</Link>
+                <Link onClick={logOut} to='/login'>LOGOUT</Link>
             </Container>
         </Component>
     )

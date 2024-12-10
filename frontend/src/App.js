@@ -7,10 +7,12 @@ import { useState } from 'react';
 //components
 import Login from './components/account/Login.js';
 import Home from './components/home/Home.js';
+import About from './components/about/About.jsx';
+import Contact from './components/contact/Contact.jsx';
 import Header from './components/header/Header.js';
 import CreatePost from './components/create/CreatePost.jsx';
 import DetailView from './components/details/DetailView.jsx';
-import Update from './components/create/Update.jsx'
+import Update from './components/create/Update.jsx';
 
 
 const PrivateRoute = ({ userAuthentication,...props }) => {
@@ -44,6 +46,14 @@ function App() {
                   
                   <Route path = '/details/:id' element = {<PrivateRoute userAuthentication = {userAuthentication} />}>
                     <Route path = '/details/:id' element = {<DetailView/>}/>
+                  </Route>
+ 
+                  <Route path = '/about' element = {<PrivateRoute userAuthentication = {userAuthentication} />}>
+                    <Route path = '/about' element = {<About/>}/>
+                  </Route>
+                  
+                  <Route path = '/contact' element = {<PrivateRoute userAuthentication = {userAuthentication} />}>
+                    <Route path = '/contact' element = {<Contact/>}/>
                   </Route>
 
               </Routes>

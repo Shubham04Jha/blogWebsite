@@ -57,8 +57,8 @@ const Comments = ({ post }) => {
     const addComment = async() => {
         comment.createDate = new Date();
         await API.createComment(comment);
-        setComment(initialValue)
-        setToggle(prev => !prev);
+        setComment(initialValue)// wait why was thing working? oh yea after posting we need to revert back to previous blanck version
+        setToggle(prev => !prev);//todo for some reason when this toggles it doesn't immediately shows. dk the reason... toggle should rerender the comments section
     }
     
     return (

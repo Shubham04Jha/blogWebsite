@@ -29,12 +29,16 @@ export const backEndUrl = `http://localhost:5000`;
 export const service_url = {
     userSignup:{url:'/signup',method:'POST'},
     userLogin:{url:'/login',method:'POST'},
+    userLogOut:{url:'/logout',method:'POST'},
+    // refreshToken:{url:'/refreshTokens',method:'POST'}, // cuurently no point of having this.
+    
     fileUpload:{url:'/file/upload', method:'POST'},
     createPost:{url:'/createPost', method:'POST'},
     getAllPosts: {url:'/posts',method:'GET', params:true},
     getPostById: {url:'/post' ,method:'GET',query:true},
     updatePost: { url: '/update', method: 'PUT', query: true },
     deletePost: { url: '/delete', method: 'DELETE', query: true },
+
     createComment:{url:'/comments/add',method:'POST'},
     getComments:{url:'/comments/get',method:'GET', query:true},
     deleteComment:{url:'/comments/delete',method:'DELETE', query: true }

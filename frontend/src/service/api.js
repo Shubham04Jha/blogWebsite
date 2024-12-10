@@ -1,7 +1,7 @@
 import axios from 'axios'
+import { isTokenExpired, getAccessToken, refreshAccessToken, setAccessToken,getType} from '../utils/common-utils';
 
 import { Api_notifications, service_url, backEndUrl } from '../constants/config'
-import { getAccessToken ,getType } from '../utils/common-utils';
 
 const API_URL = backEndUrl; 
 
@@ -14,15 +14,40 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use(
-    function(config) {
-        if (config.TYPE.params) {
-            config.params = config.TYPE.params
-        } else if (config.TYPE.query) {
+    async(config)=>{
+        let accessToken = getAccessToken();  // commented the whole thing as it was not getting anywhere cuz of this. maybe this getAccessToken was giving the actual access token and I was splitting it...
+
+        // // If the token is expired, try to refresh it
+        // console.log('before token');
+        // console.log(accessToken);
+        if (accessToken && isTokenExpired(accessToken)) {
+            console.log('Access token expired, refreshing...');
+            accessToken = await refreshAccessToken();  // Refresh the token
+
+            if (!accessToken) {
+                // console.error('Unable to refresh access token');
+                // Optionally redirect to login or handle the error
+                // window.location.href='/login'
+                return Promise.reject('Unable to refresh token');
+                // return null;
+            }
+            // Update the config with the new access token
+            // setAccessToken(accessToken);  // Store the new token
+        }
+
+        // // Attach the access token to the request
+        // if (accessToken) {
+        //     config.headers['Authorization'] = `Bearer ${accessToken}`;
+        // }
+
+        if (config.TYPE?.params) {
+            config.params = config.TYPE.params;
+        } else if (config.TYPE?.query) {
             config.url = config.url + '/' + config.TYPE.query;
         }
         return config;
     },
-    function(error) {
+    (error) => {
         return Promise.reject(error);
     }
 );
