@@ -37,11 +37,16 @@ const Comments = ({ post }) => {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await API.getComments(post._id);
-            if (response.isSuccess) {
-                setComments(response.data);
+            try {
+                const response = await API.getComments(post._id);
+                if (response.isSuccess) {
+                    setComments(response.data);
+                }
             }
-        }
+            catch (err) {
+                console.log(err);
+            }
+        } 
         if(post._id) getData();
     }, [toggle, post]);
 
@@ -55,10 +60,14 @@ const Comments = ({ post }) => {
     }
 
     const addComment = async() => {
-        comment.createDate = new Date();
-        await API.createComment(comment);
-        setComment(initialValue)// wait why was thing working? oh yea after posting we need to revert back to previous blanck version
-        setToggle(prev => !prev);//todo for some reason when this toggles it doesn't immediately shows. dk the reason... toggle should rerender the comments section
+        try {
+            comment.createDate = new Date();
+            await API.createComment(comment);
+            setComment(initialValue)// wait why was thing working? oh yea after posting we need to revert back to previous blanck version
+            setToggle(prev => !prev);//todo for some reason when this toggles it doesn't immediately shows. dk the reason... toggle should rerender the comments section
+        } catch (err) {
+            console.log(err);
+        }
     }
     
     return (

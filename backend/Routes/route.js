@@ -13,7 +13,7 @@ const router = express.Router();
 router.post('/signup',signupUser);
 
 router.post('/login',login);
-router.post('/logout',authenticateToken,logoutUser);
+router.post('/logout',logoutUser);// I think I dont need authenticateToken as logout is a private route no one else but the user can use it.
 
 router.post('/file/upload',upload.single('file'),uploadImage);
 router.get('/file/:id',getImage);

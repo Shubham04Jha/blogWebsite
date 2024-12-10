@@ -65,7 +65,7 @@ const Login = ({setUserAuthentication})=>{
       }
   };
   const onLogin = async ()=>{
-    sessionStorage.clear();// quick hack to get out of access token error.
+    // sessionStorage.clear();// quick hack to get out of access token error. todo
     const userObj = {username:userInfo.username,password:userInfo.password};
     try{
       let response = await API.userLogin(userObj);
@@ -81,7 +81,7 @@ const Login = ({setUserAuthentication})=>{
         navigate('/');
       }
     }catch(error){
-      // console.log(error);
+      console.log(error);
       // console.log('login unseccessful');
       setError(error.msg?error.msg:`${'unexpected error occurred!'}`);
     }

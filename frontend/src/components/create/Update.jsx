@@ -57,11 +57,15 @@ const Update = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            let response = await API.getPostById(id);
-            if (response.isSuccess) {
-                setPostDetails(response.data);
-            }
-        }
+            try{
+                let response = await API.getPostById(id);
+                if (response.isSuccess) {
+                    setPostDetails(response.data);
+                }
+            }catch(err){
+            console.log(err);
+            };
+        };
         fetchData();
     }, []);
 
@@ -86,29 +90,29 @@ const Update = () => {
     }
 
     const updatePost = async()=>{
-        postDetails.editDate = new Date();// lets make a diff edit date in postDetails
-        if(bannerFile){
-            // to do : delete the old image...
-            const data = new FormData();  
-            data.append('name',bannerFile.name);
-            data.append('file',bannerFile);
-            // console.log(bannerFile);
-            // API call:
-            const response = await API.fileUpload(data);
-            // console.log(response);
-            postDetails.blogBanner = response.data.fileUrl;
-            // console.log(postDetails.blogBanner);
+        try {
+            postDetails.editDate = new Date();// lets make a diff edit date in postDetails
+            if(bannerFile){
+                // to do : delete the old image...
+                const data = new FormData();  
+                data.append('name',bannerFile.name);
+                data.append('file',bannerFile);
+                // console.log(bannerFile);
+                // API call:
+                const response = await API.fileUpload(data);
+                // console.log(response);
+                postDetails.blogBanner = response.data.fileUrl;
+                // console.log(postDetails.blogBanner);
+            }
+            
+            let response = await API.updatePost(postDetails)
+            
+            if(response.isSuccess){
+                navigate(-1)
+            }
+        } catch (error) {
+            console.log(error);
         }
-        
-        let response = await API.updatePost(postDetails)
-        
-        if(response.isSuccess){
-            navigate(-1)
-        }else{
-            // console.log("response:");
-            // console.log(response);
-        }
-        // console.log(postDetails)
     }
     return (
         <PageLayOut>

@@ -2,7 +2,7 @@
 import { AppBar, Toolbar, styled, Button } from '@mui/material'; 
 import { Link } from 'react-router-dom';
 import API from '../../service/api.js';
-import {getRefreshToken} from '../../utils/common-utils.js';
+import {clearTokens, getRefreshToken} from '../../utils/common-utils.js';
 
 const Component = styled(AppBar)`
     background: #FFFFFF;
@@ -21,7 +21,13 @@ const Container = styled(Toolbar)`
 const logOut = async()=>{
     // console.log('logout!')
     const token = getRefreshToken();
-    await API.userLogOut({token});
+    if(!token) return;
+    try{
+        await API.userLogOut({token});
+    }catch(err){
+        console.log(err);
+    }
+    clearTokens();
 }
 
 export const Header = ({userAuthentication}) => {

@@ -3,12 +3,25 @@ import axios from "axios";
 axios.defaults.baseURL = 'http://localhost:5000';  // very crude way of doing it... no error handling done here... it should but to do...
 axios.defaults.timeout = 10000;
 
+export const clearTokens = () => {
+    // Remove access token and refresh token from localStorage
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
+    
+    console.log('Tokens have been cleared');
+};
+
+
 export const getAccessToken=()=>{
-    return sessionStorage.getItem('accessToken').split(' ')[1];
+    const data = sessionStorage.getItem('accessToken');
+    if(!data) return null;
+    return data.split(' ')[1];
 }
 
 export const getRefreshToken = () => {
-    return sessionStorage.getItem('refreshToken').split(' ')[1];
+    const data = sessionStorage.getItem('refreshToken');
+    if(!data) return null;
+    return data.split(' ')[1];
 }
 
 export const setAccessToken = (accessToken) => {
@@ -60,7 +73,7 @@ export const refreshAccessToken = async () => {
         setAccessToken(newAccessToken) // Store the new access token
         return newAccessToken;
     } catch (error) {
-        console.error('Unable to refresh access token', error);
+        console.log('Unable to refresh access token', error);
         return null;
     }
 };

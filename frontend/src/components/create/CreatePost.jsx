@@ -72,29 +72,29 @@ const CreatePost = () => {
     }
 
     const savePost = async()=>{
-        postDetails.createDate = new Date();
-        if(bannerFile){
-            const data = new FormData();  
-            data.append('name',bannerFile.name);
-            data.append('file',bannerFile);
-            // console.log(bannerFile);
-            // API call:
-            const response = await API.fileUpload(data);
-            // console.log(response);
-            postDetails.blogBanner = response.data.fileUrl;
-            // console.log(postDetails.blogBanner);
-        }else{
-            postDetails.blogBanner = '/banner-background.jpg';
-        }
-        let response = await API.createPost(postDetails)
-        
-        if(response.isSuccess){
-            navigate(-1)
-        }else{
-            // console.log("response:");
-            // console.log(response);
-        }
-        // console.log(postDetails)
+        try{
+                postDetails.createDate = new Date();
+                if(bannerFile){
+                    const data = new FormData();  
+                    data.append('name',bannerFile.name);
+                    data.append('file',bannerFile);
+                    // console.log(bannerFile);
+                    // API call:
+                    const response = await API.fileUpload(data);
+                    // console.log(response);
+                    postDetails.blogBanner = response.data.fileUrl;
+                    // console.log(postDetails.blogBanner);
+                }else{
+                    postDetails.blogBanner = '/banner-background.jpg';
+                }
+                let response = await API.createPost(postDetails)
+                
+                if(response.isSuccess){
+                    navigate(-1)
+                }
+            }catch(err){
+                console.log(err);
+            }
     }
     return (
         <PageLayOut>

@@ -15,10 +15,14 @@ const Posts = ()=>{
     const category = searchParams.get('category');// works cuz change in url causes re-render of searchParams 
     useEffect( ()=>{// category response is expected here...
         const fetchData = async()=>{
-            let response = await API.getAllPosts({ category : category || 'All' });
-            // console.log(response);
-            if(response.isSuccess){
-                setPosts(response.data);
+            try {
+                let response = await API.getAllPosts({ category : category || 'All' });
+                // console.log(response);
+                if(response.isSuccess){
+                    setPosts(response.data);
+                }
+            } catch (err) {
+                console.log(err);
             }
         }
         fetchData();

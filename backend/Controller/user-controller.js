@@ -78,6 +78,9 @@ export async function login(req,res){
 export const logoutUser = async (request, response) => {
     // console.log(request.body);
     const token = request.body.token;
+    if(!token){
+        return response.status(404).json({msg:'no token found'});
+    }
     await Token.deleteMany({ token: token });// nottodo delete many not executing properly. or maybe it is happening and I am not seeing it cuz the token must be changing. Oh yea it would be changing as iat is also involved in it. so good so far i say.
-    response.status(204).json({ msg: 'logout successfull' });
+    return response.status(204).json({ msg: 'logout successfull' });
 }

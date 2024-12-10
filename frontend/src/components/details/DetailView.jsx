@@ -56,11 +56,15 @@ const DetailView = () => {
     
     useEffect(() => {
         const fetchData = async () => {
-            let response = await API.getPostById(id);
-            if (response.isSuccess) {
-                setPost(response.data);
+            try {
+                let response = await API.getPostById(id);
+                if (response.isSuccess) {
+                    setPost(response.data);
+                }
+            } catch (error) {
+                console.log(error);
             }
-        }
+        };
         fetchData();
     }, []);
     // console.log(account); for some strange reason i used username for context and userName for post...
@@ -100,11 +104,15 @@ const DetailView = () => {
                         </Link>
 
                         <Link onClick={async()=>{
-                            let response=await API.deletePost(post._id);
-                            if(response.isSuccess){
-                                navigate(-1);
-                            }else{
-                                alert('could not delete...');
+                            try {
+                                let response=await API.deletePost(post._id);
+                                if(response.isSuccess){
+                                    navigate(-1);
+                                }else{
+                                    alert('could not delete...');
+                                }
+                            } catch (err) {
+                                console.log(err);
                             }
                         }}>
                             <i className="material-icons" style={{

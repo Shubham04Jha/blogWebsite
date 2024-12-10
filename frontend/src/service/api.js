@@ -1,7 +1,9 @@
 import axios from 'axios'
-import { isTokenExpired, getAccessToken, refreshAccessToken, setAccessToken,getType} from '../utils/common-utils';
+import { isTokenExpired, getAccessToken, refreshAccessToken,getType, clearTokens} from '../utils/common-utils';
 
 import { Api_notifications, service_url, backEndUrl } from '../constants/config'
+
+// import { useNavigate } from 'react-router-dom';
 
 const API_URL = backEndUrl; 
 
@@ -20,16 +22,19 @@ axiosInstance.interceptors.request.use(
         // // If the token is expired, try to refresh it
         // console.log('before token');
         // console.log(accessToken);
-        if (accessToken && isTokenExpired(accessToken)) {
+        if (isTokenExpired(accessToken)) {
             console.log('Access token expired, refreshing...');
             accessToken = await refreshAccessToken();  // Refresh the token
 
             if (!accessToken) {
-                // console.error('Unable to refresh access token');
-                // Optionally redirect to login or handle the error
-                // window.location.href='/login'
-                return Promise.reject('Unable to refresh token');
-                // return null;
+                // todo major
+                if (window.location.pathname !== '/login') {
+                    window.location.pathname = '/login'; // Full page redirect to login
+                    clearTokens();
+                }// this will avoid refreshing twice when the login in.
+                // this means that refreshToken is invalid or server error is there. I should use  or may be when it logins it should not search for tokens.
+                // const navigate = useNavigate();
+                // navigate('/login')
             }
             // Update the config with the new access token
             // setAccessToken(accessToken);  // Store the new token
@@ -88,7 +93,7 @@ const processError = (error)=>{
         obj.msg= Api_notifications.networkError.message;
         obj.title= Api_notifications.networkError.title;
     }
-    return error;
+    return obj;
 }
 
 const API = {};
