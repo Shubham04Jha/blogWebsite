@@ -44,7 +44,7 @@ const Comments = ({ post }) => {
                 }
             }
             catch (err) {
-                console.log(err);
+                // console.log(err);
             }
         } 
         if(post._id) getData();
@@ -64,9 +64,9 @@ const Comments = ({ post }) => {
             comment.createDate = new Date();
             await API.createComment(comment);
             setComment(initialValue)// wait why was thing working? oh yea after posting we need to revert back to previous blanck version
-            setToggle(prev => !prev);//todo for some reason when this toggles it doesn't immediately shows. dk the reason... toggle should rerender the comments section
+            setToggle(prev => !prev);//todo for some reason sometimes when this toggles it doesn't immediately shows. dk the reason... toggle should rerender the comments section
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     }
     

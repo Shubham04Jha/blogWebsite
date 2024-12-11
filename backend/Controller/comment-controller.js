@@ -4,7 +4,8 @@ import commentModel from "../Model/comment.js";
 export const createComment = async (request,response)=>{
     try{
         const comment = await new commentModel(request.body);
-        comment.save();
+        await comment.validate();
+        await comment.save();
         return response.status(200).json({msg:'comment saved successfully'})
     }catch(error){
         return response.status(500).json(error)

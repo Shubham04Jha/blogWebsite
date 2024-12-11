@@ -37,7 +37,7 @@ const Comment = ({ comment, setToggle }) => {
         try {
             await API.deleteComment(comment._id);
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
         setToggle(prev => !prev);
     }

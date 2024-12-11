@@ -81,7 +81,7 @@ const Login = ({setUserAuthentication})=>{
         navigate('/');
       }
     }catch(error){
-      console.log(error);
+      // console.log(error);
       // console.log('login unseccessful');
       setError(error.msg?error.msg:`${'unexpected error occurred!'}`);
     }

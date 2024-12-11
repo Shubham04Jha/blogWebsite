@@ -23,7 +23,7 @@ axiosInstance.interceptors.request.use(
         // console.log('before token');
         // console.log(accessToken);
         if (isTokenExpired(accessToken)) {
-            console.log('Access token expired, refreshing...');
+            // console.log('Access token expired, refreshing...');
             accessToken = await refreshAccessToken();  // Refresh the token
 
             if (!accessToken) {

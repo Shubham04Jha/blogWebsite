@@ -8,7 +8,7 @@ export const clearTokens = () => {
     sessionStorage.removeItem('accessToken');
     sessionStorage.removeItem('refreshToken');
     
-    console.log('Tokens have been cleared');
+    // console.log('Tokens have been cleared');
 };
 
 
@@ -73,7 +73,15 @@ export const refreshAccessToken = async () => {
         setAccessToken(newAccessToken) // Store the new access token
         return newAccessToken;
     } catch (error) {
-        console.log('Unable to refresh access token', error);
+        // console.log('Unable to refresh access token', error);
         return null;
     }
 };
+
+
+export const validatePost=(user)=>{
+    if(!user){
+        return false;
+    }
+    
+}

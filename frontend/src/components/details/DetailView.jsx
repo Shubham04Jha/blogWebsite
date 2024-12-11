@@ -62,7 +62,7 @@ const DetailView = () => {
                     setPost(response.data);
                 }
             } catch (error) {
-                console.log(error);
+                // console.log(error);
             }
         };
         fetchData();
@@ -112,7 +112,7 @@ const DetailView = () => {
                                     alert('could not delete...');
                                 }
                             } catch (err) {
-                                console.log(err);
+                                // console.log(err);
                             }
                         }}>
                             <i className="material-icons" style={{

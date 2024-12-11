@@ -111,7 +111,7 @@ const Update = () => {
                 navigate(-1)
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
     return (

@@ -2,6 +2,9 @@ This project is almost done.
 
 TO DOs
 Deployment....
+error handling, for empty post data. 
+-> create a util function to validate posts before sending it.<--- no need of it as the app runs smoothly even if you perform something like sending invalid (empty) post it works like it never happened so you have to put the correct value there in order to continue.
+
 marking todos in most of the code where change is necessary.
 query and params.
 how does privateRoute works?? from frontend perspective.
@@ -19,3 +22,4 @@ I think are resolved:
   Try-catch will avoid the error. and refreshing will cause to navigate to login.
 4) logout needs to precede a refresh otherwise
 5) Good error handling around many api calls. (there are still uncaught errors.)
+6) -> also have to ensure that app dont crash when we send the empty response in backend. <-- solvable by using .validate of the model instace

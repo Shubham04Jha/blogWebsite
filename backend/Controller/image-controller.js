@@ -13,7 +13,8 @@ export const uploadImage = async (req, res) => {
             contentType: req.file.mimetype,
             data: req.file.buffer,
         });
-
+        //validate
+        await photo.validate();
         // Save the photo to the database
         const savedPhoto = await photo.save();
 

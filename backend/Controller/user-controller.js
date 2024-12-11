@@ -31,6 +31,7 @@ export default async function signupUser(req, res) {
 
         // Create and save the new user
         const newUser = new User(encryptedUser); // Use 'new' to create an instance
+        await newUser.validate();
         await newUser.save();
         return res.status(200).json({ msg: 'Signup successful' });
 
@@ -66,6 +67,7 @@ export async function login(req,res){
             // console.log(expiresAt.toDateString()); so the expiresAt is successfully set
 
             const newToken = new Token({token:refreshToken,expiresAt:expiresAt});
+            await newToken.validate();
             await newToken.save();
             return (res.status(200).json({msg:`welcome ${existingUser.name}`,accessToken:accessToken,refreshToken:refreshToken,userName:existingUser.username,name:existingUser.name}));
         }

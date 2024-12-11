@@ -25,7 +25,7 @@ const logOut = async()=>{
     try{
         await API.userLogOut({token});
     }catch(err){
-        console.log(err);
+        // console.log(err);
     }
     clearTokens();
 }

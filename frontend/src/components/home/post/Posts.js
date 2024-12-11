@@ -22,7 +22,7 @@ const Posts = ()=>{
                     setPosts(response.data);
                 }
             } catch (err) {
-                console.log(err);
+                // console.log(err);
             }
         }
         fetchData();
