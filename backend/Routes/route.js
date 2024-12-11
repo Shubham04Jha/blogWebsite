@@ -4,7 +4,7 @@ import upload from '../utils/Upload.js'
 import {createPost,getAllPosts, getPost,updatePost,deletePost} from '../Controller/post-controller.js';
 import { authenticateToken,createNewToken } from '../Controller/jwt-controller.js';
 
-import { uploadImage,getImage } from '../Controller/image-controller.js';
+import { uploadImage,getImage,deleteImage } from '../Controller/image-controller.js';
 
 import { createComment, deleteComment, getComments } from '../Controller/comment-controller.js';
 
@@ -17,6 +17,7 @@ router.post('/logout',logoutUser);// I think I dont need authenticateToken as lo
 
 router.post('/file/upload',upload.single('file'),uploadImage);
 router.get('/file/:id',getImage);
+router.delete('/file/delete/:id',authenticateToken,deleteImage);
 
 router.post('/createPost',authenticateToken,createPost)
 

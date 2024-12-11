@@ -63,7 +63,7 @@ const Update = () => {
                     setPostDetails(response.data);
                 }
             }catch(err){
-            console.log(err);
+            // console.log(err);
             };
         };
         fetchData();
@@ -99,8 +99,12 @@ const Update = () => {
                 data.append('file',bannerFile);
                 // console.log(bannerFile);
                 // API call:
+                const id = postDetails.blogBanner.split('/').pop();// todo
+                // const id = postDetails.blogBanner.match(/\/file\/([^/]+)/)[1]; // another method using regex.
                 const response = await API.fileUpload(data);
                 // console.log(response);
+                
+                await API.fileDelete(id);//todo if this gives error when id is corrupt?? can be tested by calling the update when image is the default one.
                 postDetails.blogBanner = response.data.fileUrl;
                 // console.log(postDetails.blogBanner);
             }
@@ -111,7 +115,7 @@ const Update = () => {
                 navigate(-1)
             }
         } catch (error) {
-            // console.log(error);
+            console.log(error);
         }
     }
     return (

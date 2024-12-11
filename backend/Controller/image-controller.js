@@ -26,7 +26,7 @@ export const uploadImage = async (req, res) => {
             fileUrl: imgUrl, 
         });
     } catch (error) {
-        console.error('Error uploading file:', error);
+        // console.error('Error uploading file:', error);
         return res.status(500).json({ msg: 'Error uploading file' });
     }
 };
@@ -44,10 +44,20 @@ export const getImage = async (req, res) => {
         res.set('Content-Type', photo.contentType);
         res.send(photo.data);
     } catch (error) {
-        console.error('Error retrieving file:', error);
+        // console.error('Error retrieving file:', error);
         return res.status(500).json({ msg: 'Error retrieving file' });
     }
 }; 
+
+export const deleteImage  = async(req,res)=>{
+    try{
+        await Photo.findByIdAndDelete(req.params.id);
+        res.status(200).json({msg:'Deleted messgae successfully'});
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error);
+    }
+}
 
 // good stuff but for application code consistency lets just use the model format.
 //import mongoose from 'mongoose';

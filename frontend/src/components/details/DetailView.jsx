@@ -105,6 +105,8 @@ const DetailView = () => {
 
                         <Link onClick={async()=>{
                             try {
+                                const id = post.blogBanner.split('/').pop();
+                                await API.fileDelete(id); //todo
                                 let response=await API.deletePost(post._id);
                                 if(response.isSuccess){
                                     navigate(-1);

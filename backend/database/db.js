@@ -4,10 +4,10 @@ const Connection = async (mongoUrl) => {
     URL = mongoUrl;
     try{
         await mongoose.connect(URL);
-        console.log('connection with db successful');
+        // console.log('connection with db successful');
     }
     catch(error){
-        console.log('connection failed : ',error);
+        // console.log('connection failed : ',error);
     }
 };
 

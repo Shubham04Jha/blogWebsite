@@ -36,7 +36,7 @@ export default async function signupUser(req, res) {
         return res.status(200).json({ msg: 'Signup successful' });
 
     } catch (err) {// if not saved nor found.
-        console.error('Error during signup:', err);
+        // console.error('Error during signup:', err);
         if (err.name === 'ValidationError') {
             return res.status(400).json({ msg: err.message });
         }

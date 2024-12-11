@@ -10,7 +10,7 @@ export const authenticateToken = (request,response,next)=>{
     if(token==null){
         return response.status(401).json({msg:'token is missing'})
     }
-    console.log
+    // console.log('');
     jwt.verify(token,process.env.Secret_Access_Key,(err,user)=>{
         if(err){
             return response.status(403).json({msg:'invalid token'})
@@ -39,7 +39,7 @@ export const createNewToken = async (req, res) => {
         jwt.verify(refreshToken, process.env.Secret_Refresh_Key, (err, decodedUser) => {
             if (err) {
                 // Handle specific JWT errors (expired, invalid)
-                console.log(err);
+                // console.log(err);
                 if (err.name === 'TokenExpiredError') {
                     return res.status(401).json({ msg: 'Refresh token expired' });
                 } else {
@@ -59,7 +59,7 @@ export const createNewToken = async (req, res) => {
             return res.status(200).json({ accessToken });
         });
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         return res.status(500).json({ msg: 'Internal server error' });
     }
 };
