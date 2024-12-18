@@ -9,6 +9,9 @@ import { DataContext } from '../../context/DataProvider';
 
 import Comments from './comments/Comments';
 
+
+const backEndUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+
 const Container = styled(Box)(({ theme }) => ({
     margin: '64px 100px',
     [theme.breakpoints.down('md')]: {
@@ -73,7 +76,13 @@ const DetailView = () => {
 
     return (
         <Container>
-            <Image src={post.blogBanner=='defaultImage'?'/banner-background.jpg':post.blogBanner} alt="post-Banner" />
+            {/* <Image src={post.blogBanner&&(post.blogBanner=='defaultImage'?'/banner-background.jpg':backEndUrl+post.blogBanner.substring(post.blogBanner.indexOf('/file')))} alt="post-Banner" /> */}
+            <Image 
+                src={post.blogBanner && post.blogBanner !== 'defaultImage' ? 
+                    backEndUrl + post.blogBanner.substring(post.blogBanner.indexOf('/file')) : 
+                    '/banner-background.jpg'} 
+                alt="post-Banner" 
+            />
             <Box style={{ float: 'right' }}>
             <label style={{cursor:'pointer'}} onClick={() => navigate(-1)}>
                         <i className="material-icons" style={{

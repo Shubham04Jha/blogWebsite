@@ -1,6 +1,7 @@
 import axios from "axios";
 
-axios.defaults.baseURL = 'http://localhost:5000';  // very crude way of doing it... no error handling done here... it should but to do...
+const backEndUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+axios.defaults.baseURL = backEndUrl||'http://localhost:5000';  // very crude way of doing it... no error handling done here... it should but to do...
 axios.defaults.timeout = 10000;
 
 export const clearTokens = () => {

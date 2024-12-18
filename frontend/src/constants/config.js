@@ -1,5 +1,7 @@
 
 
+export const backEndUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+
 export const Api_notifications = {
     loading: {
         title: "Loading...",
@@ -22,8 +24,6 @@ export const Api_notifications = {
         message: "Unable to connect to the server. Please check internet connectivity and try again."
     }
 }
-export const backEndUrl = `http://localhost:5000`;
-
 
 // {url:'/*', method:POST/GET/PUT/DELETE, params:true/false, query:true/false }
 export const service_url = {

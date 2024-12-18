@@ -2,6 +2,8 @@ This project is almost done.
 
 TO DOs
 Deployment.... 
+->changing the way ImageURL is being produced. --- sacking the url part seems tobe the key. other I think is to edit the url from the db...
+->changing the way ImageUrl is used in fronend.
 marking todos in most of the code where change is necessary.
 query and params.
 how does privateRoute works?? from frontend perspective.

@@ -4,6 +4,9 @@ import { useNavigate, useSearchParams, useParams, Link } from 'react-router-dom'
 import { DataContext } from '../../context/DataProvider';
 import API from '../../service/api.js'
 
+
+const backEndUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+
 const PageLayOut = styled(Box)`
     margin: 64px 100px 0px;
 `;
@@ -60,7 +63,6 @@ const Update = () => {
             try{
                 let response = await API.getPostById(id);
                 if (response.isSuccess) {
-                    setPostDetails(response.data);
                 }
             }catch(err){
             // console.log(err);
@@ -122,7 +124,7 @@ const Update = () => {
         <PageLayOut>
             {/* Display the selected image only if it's a valid file otherwise the default file only*/}
             
-            <Image src = {bannerFile?bannerUrl:(postDetails.blogBanner=='defaultImage'?'/banner-background.jpg':postDetails.blogBanner)} alt = "banner"/>
+            <Image src = {bannerFile?bannerUrl:(postDetails.blogBanner=='defaultImage'?'/banner-background.jpg':backEndUrl+postDetails.blogBanner.substring(postDetails.blogBanner.indexOf('/file')))} alt = "banner"/>
             {/* legacy posts have defaultImage init */}
             <StyledForm>
                 <label htmlFor="inputFile" style={{cursor:'pointer'}}>

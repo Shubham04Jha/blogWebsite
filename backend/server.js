@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Use your router
 app.use('/', Router);
 
-const Port = 5000;
+const Port = process.env.Port||5000; 
 
 app.listen(Port,()=>{console.log(`server is running on Port : ${Port}`)});
 

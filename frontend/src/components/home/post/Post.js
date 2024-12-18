@@ -1,6 +1,9 @@
 
 import { styled, Box, Typography } from '@mui/material';
 
+
+const backEndUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+
 const Container = styled(Box)`
     border: 1px solid #d3cede;
     border-radius: 10px;
@@ -38,7 +41,7 @@ const Details = styled(Typography)`
 
 const Post = ({ post }) => {
     // const url = post.picture ? post.picture : 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80';
-    const url = post.blogBanner!='defaultImage' ? post.blogBanner : '/banner-background.jpg';
+    const url = post.blogBanner=='defaultImage' ? '/banner-background.jpg' :backEndUrl+post.blogBanner.substring(post.blogBanner.indexOf('/file'))
     
     const addEllipsis = (str, limit) => {
         return str.length > limit ? str.substring(0, limit) + '...' : str;
