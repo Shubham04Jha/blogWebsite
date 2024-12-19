@@ -36,5 +36,9 @@ router.post('/comments/add',authenticateToken,createComment);
 router.get('/comments/get/:id',authenticateToken,getComments);
 router.delete('/comments/delete/:id',authenticateToken,deleteComment);
 
+router.get('/',(req,res)=>{
+    res.send('you have reached to the blogwebsite server');
+});
+
 
 export default router;
