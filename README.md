@@ -1,7 +1,6 @@
-This project is almost done.
+Hosted link of the project: [blogwebsite](https://blog-website-six-flame.vercel.app/)
 
 TO DOs
-Deployment.... 
 
 
 
@@ -25,3 +24,4 @@ I think are resolved:
 -> defaultImage is not coming up nicely. (fixed)
 -> deleting of post with defaultimages causing some trouble.(fixed) 0.1: deletion in updation (done), 0.2: deletion in detailView (done)
 -> update page not working. (fixed)
+9) Deployment.... (done)
