@@ -23,6 +23,6 @@ const Port = process.env.Port||5000;
 
 app.listen(Port,()=>{console.log(`server is running on Port : ${Port}`)});
 
-const URL = process.env.DB_URL;
+const url = process.env.DB_URL;
 
-Connection(URL);  
+Connection(url);  

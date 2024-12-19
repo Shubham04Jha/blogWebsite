@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
 const Connection = async (mongoUrl) => {
-    URL = mongoUrl;
+    const dbUrl = mongoUrl;
     try{
-        await mongoose.connect(URL);
+        await mongoose.connect(dbUrl);
         // console.log('connection with db successful');
     }
     catch(error){

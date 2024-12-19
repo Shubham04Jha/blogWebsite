@@ -3,10 +3,6 @@ This project is almost done.
 TO DOs
 Deployment.... 
 
-marking todos in most of the code where change is necessary.
-query and params.
-how does privateRoute works?? from frontend perspective.
-
 
 
 I think are resolved:
