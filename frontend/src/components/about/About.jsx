@@ -2,10 +2,11 @@
 import { Box, styled, Typography, Link } from '@mui/material';
 
 const Banner = styled(Box)`
-    background-image: url(/banner.jpg);
+    margin-top:60px;
+    background-image: url(/aboutme.jpg);
     width: 100%;
     height: 50vh;
-    background-position: left 0px bottom 0px;
+    background-position: center 60%;
     background-size: cover;
 `;
 
