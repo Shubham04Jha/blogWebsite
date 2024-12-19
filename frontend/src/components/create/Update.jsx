@@ -44,7 +44,6 @@ const initialPostDetails = {
 };
 const Update = () => {
     const[searchParams] = useSearchParams();
-    initialPostDetails.category = searchParams.get(`category`)?searchParams.get(`category`):'/';
     const [postDetails, setPostDetails] = useState(initialPostDetails);
     const [bannerFile, setBannerFile] = useState(null);
     const [bannerUrl, setBannerUrl] = useState('');
@@ -63,6 +62,7 @@ const Update = () => {
             try{
                 let response = await API.getPostById(id);
                 if (response.isSuccess) {
+                    setPostDetails(response.data);
                 }
             }catch(err){
             // console.log(err);
@@ -101,12 +101,14 @@ const Update = () => {
                 data.append('file',bannerFile);
                 // console.log(bannerFile);
                 // API call:
-                const id = postDetails.blogBanner.split('/').pop();// todo
-                // const id = postDetails.blogBanner.match(/\/file\/([^/]+)/)[1]; // another method using regex.
+                const bannerId = postDetails.blogBanner.split('/').pop();// todo
+                // const bannerId = postDetails.blogBanner.match(/\/file\/([^/]+)/)[1]; // another method using regex.
                 const response = await API.fileUpload(data);
                 // console.log(response);
-                
-                await API.fileDelete(id);//todo if this gives error when id is corrupt?? can be tested by calling the update when image is the default one.
+                if(postDetails.blogBanner.indexOf('/file')>=0){
+                    await API.fileDelete(bannerId); // now this will work for updation of post with default image as banner.
+                }
+                //todo if this gives error when id is corrupt??
                 postDetails.blogBanner = response.data.fileUrl;
                 // console.log(postDetails.blogBanner);
             }
@@ -124,7 +126,7 @@ const Update = () => {
         <PageLayOut>
             {/* Display the selected image only if it's a valid file otherwise the default file only*/}
             
-            <Image src = {bannerFile?bannerUrl:(postDetails.blogBanner=='defaultImage'?'/banner-background.jpg':backEndUrl+postDetails.blogBanner.substring(postDetails.blogBanner.indexOf('/file')))} alt = "banner"/>
+            <Image src = {bannerFile?bannerUrl:(postDetails.blogBanner=='defaultImage'?'/banner-background.jpg':(postDetails.blogBanner.indexOf('/file')<0?'/banner-background.jpg':backEndUrl+postDetails.blogBanner.substring(postDetails.blogBanner.indexOf('/file'))))} alt = "banner"/>
             {/* legacy posts have defaultImage init */}
             <StyledForm>
                 <label htmlFor="inputFile" style={{cursor:'pointer'}}>

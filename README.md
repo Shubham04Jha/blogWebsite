@@ -2,8 +2,7 @@ This project is almost done.
 
 TO DOs
 Deployment.... 
-->changing the way ImageURL is being produced. --- sacking the url part seems tobe the key. other I think is to edit the url from the db...
-->changing the way ImageUrl is used in fronend.
+
 marking todos in most of the code where change is necessary.
 query and params.
 how does privateRoute works?? from frontend perspective.
@@ -25,3 +24,8 @@ I think are resolved:
 -> create a util function to validate posts before sending it.<--- no need of it as the app runs smoothly even if you perform something like sending invalid (empty) post it works like it never happened so you have to put the correct value there in order to continue.
 -> also have to ensure that app dont crash when we send the empty response in backend. <-- solvable by using .validate of the model instance
 7) deletion of old images once user replaces banner images. <---- the link of the image contains the id. so we can use it. Okay functionality achieved.
+8) changing the way ImageURL is being produced. --- sacking the url part seems to be the key. other I think is to edit the url from the db... nah just used conditions to modify the img src attribute based on the type of url in blogBanner.
+->changing the way ImageUrl is used in fronend. (done)
+-> defaultImage is not coming up nicely. (fixed)
+-> deleting of post with defaultimages causing some trouble.(fixed) 0.1: deletion in updation (done), 0.2: deletion in detailView (done)
+-> update page not working. (fixed)

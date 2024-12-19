@@ -79,7 +79,7 @@ const DetailView = () => {
             {/* <Image src={post.blogBanner&&(post.blogBanner=='defaultImage'?'/banner-background.jpg':backEndUrl+post.blogBanner.substring(post.blogBanner.indexOf('/file')))} alt="post-Banner" /> */}
             <Image 
                 src={post.blogBanner && post.blogBanner !== 'defaultImage' ? 
-                    backEndUrl + post.blogBanner.substring(post.blogBanner.indexOf('/file')) : 
+                    post.blogBanner.indexOf('/file')<0?post.blogBanner:backEndUrl + post.blogBanner.substring(post.blogBanner.indexOf('/file')) : 
                     '/banner-background.jpg'} 
                 alt="post-Banner" 
             />
@@ -114,8 +114,10 @@ const DetailView = () => {
 
                         <Link onClick={async()=>{
                             try {
-                                const id = post.blogBanner.split('/').pop();
-                                await API.fileDelete(id); //todo
+                                const bannerId = post.blogBanner.split('/').pop();
+                                if(post.blogBanner.indexOf('/file')>=0){
+                                    await API.fileDelete(bannerId); // now this will work for deletion of post with default image as banner.
+                                }
                                 let response=await API.deletePost(post._id);
                                 if(response.isSuccess){
                                     navigate(-1);
